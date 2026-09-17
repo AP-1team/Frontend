@@ -6,6 +6,13 @@
   box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'Ria';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/RiaSans-ExtraBold.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
 
 /*Login 영역*/
 
@@ -53,6 +60,7 @@
 .Login-rightBox > span {
   font-size: 54px;
   font-weight: 900;
+  font-family: 'Ria';
 }
 
 .Login-inputBox {
@@ -80,6 +88,7 @@
   .Login-IDBox > label {
     font-size: 24px;
     font-weight: 800;
+    font-family: 'Ria';
   }
   .Login-IDBox > input  {
     height: 30px;
@@ -90,6 +99,10 @@
     border: none;
     margin-left: 4px;
   }
+
+.Login-PWBox {
+  padding: 0px 4px;
+}
 
 #Login-submitButton {
   background-color: #FCEFE3;
@@ -105,10 +118,17 @@
   font-size: 25px;
   font-weight: 800;
   transition-duration: 0.14s;
+  font-family: 'Ria';
 }
   #Login-submitButton:hover {
     background-color: #ffb36c;
   }
+
+.Login-submitBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .Login-signButton {
   color: #EC9950;
@@ -117,4 +137,76 @@
   bottom: 20px;
   font-size: 24px;
   font-weight: 800;
+  font-family: 'Ria';
+}
+
+.Login-submitBox > span {
+  color: rgb(212, 38, 38);
+  min-height: 24px;
+  font-family: 'Ria';
+}
+
+/*Header 영역*/
+
+.Head-container {
+  width: 100%;
+  height: 70px;
+  background-color: #F9F9F9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 14px;
+}
+
+.Head-leftSide {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.Head-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.Head-title {
+  color: #B85C38;
+  font-size: 35px;
+  font-weight: 800;
+  font-family: 'Ria';
+}
+
+.Head-rightSide {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.Head-button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-size: 30px;
+  font-weight: 800;
+  padding: 0px 5px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: 'Ria';
+}
+
+.Head-button:hover {
+  background-color: rgba(182, 182, 182, 0.262);
+}
+
+#Head-homeButton {
+  color: #EC9950;
+}
+
+.Head-slash {
+  width: 6px;
+  height: 30px;
+  background-color: black;
 }

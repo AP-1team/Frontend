@@ -1,8 +1,25 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-
+import { useState } from 'react'
 
 
 export default function Login() {
+
+    const [userID, setUserID] = useState("");
+    const [userPW, setUserPW] = useState("");
+    const [error, setError] = useState(" ");
+
+    const LoginClicked = (e) => {
+        e.preventDefault();
+
+        if(userID === "") {
+            setError("아이디를 입력해주세요");
+            return;
+        }
+        else if(userPW === "") {
+            setError("비밀번호를 입력해주세요");
+            return;
+        }
+    }
 
     return (
         <div className='Login-container'>
@@ -17,15 +34,24 @@ export default function Login() {
                     <div className='Login-inputBox'>
                         <div className='Login-IDBox'>
                             <label for='Login-ID'>아이디:</label>
-                            <input id='Login-ID'/>
+                            <input id='Login-ID' onChange={(e)=>{
+                                setUserID(e.target.value);
+                                setError("");
+                            }} value={userID}/>
                         </div>
 
-                        <div className='Login-IDBox'>
+                        <div className='Login-IDBox Login-PWBox'>
                             <label for='Login-ID'>비밀번호:</label>
-                            <input id='Login-PW' type='password'/>
+                            <input id='Login-PW' type='password' onChange={(e)=>{
+                                setUserPW(e.target.value);
+                                setError("");
+                            }} value={userPW}/>
                         </div>
-
-                        <button id='Login-submitButton'>로그인</button>
+                        
+                        <div className='Login-submitBox'>
+                            <button id='Login-submitButton' onClick={LoginClicked}>로그인</button>
+                            <span>{error}</span>
+                        </div>
 
                         <Link to='/sign' className='Login-signButton'>회원 가입하러가기</Link>
                     </div>
