@@ -19,6 +19,27 @@ export default function Login() {
             setError("비밀번호를 입력해주세요");
             return;
         }
+
+        fetch('/api/auth/login', {
+            method: "POST",
+            body: JSON.stringify({
+                "username": userID,
+                "password": userPW
+            })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.success) {
+                console.log("로그인 성공");
+            }
+            else {
+                setError("존재하지 않는 계정입니다.");
+            }
+        })
+        .catch(error => {
+            console.log("로그인 중 에러 발생",error);
+            setError("서버와 통신할 수 없습니다.");
+        })
     }
 
     return (
@@ -59,4 +80,4 @@ export default function Login() {
             </div>
         </div>
     )
-}
+}   
