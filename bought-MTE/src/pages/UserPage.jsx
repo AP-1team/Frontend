@@ -5,6 +5,9 @@ import { BrowserRouter, Routes, Route, Link, Outlet, useNavigate } from 'react-r
 export default function UserPage() {
 
     const navigate = useNavigate();
+    
+    const [logOut, setLogout] = useState(false);
+    const [bottomChoice, setBottomChoice] = useState("continue");
 
     const [user, setUser] = useState({ //임시 유저 정보
         "id": 1,
@@ -12,7 +15,6 @@ export default function UserPage() {
         "phone": "010-1013-0524",
         "address": "우리집",
         "boughtCount": 20,
-        "email": "testmail2026@gmail.com",
     })
 
     // const [user, setUser] = useState(null);
@@ -42,6 +44,10 @@ export default function UserPage() {
 
     return (
         <section className='userPage-container'>
+
+            {logOut && (
+                <LogoutConfirm logout={logout} setLogout={setLogout}/>
+            )}
             <div className='userPage-box'>
                 <div className='userPage-userBox'>
                     <div className='userPage-userProfile'>
@@ -50,20 +56,53 @@ export default function UserPage() {
 
                     <div className='userPage-profileRightside'>
                         <span className='userPage-boughtCount'>
-                            공동구매 누적 200번
+                            공동구매 누적 {user?.boughtCount}번
                         </span>
 
                         <div className='userPage-userPageBottom'>
                             <span className='userPage-userName'>{user?.username}</span>
-                            <span className='userPage-userEmail'>email : {user?.email}</span>
                             <div className='userPage-btnBox'>
                                 <button>정보 변경</button>
-                                <button onClick={()=>{logout()}}>로그 아웃</button>
+                                <button onClick={()=>{setLogout(true)}}>로그 아웃</button>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div className='userPage-bottomChoice'>
+                    <button
+                    className={bottomChoice === "continue" ? "active" : ""}
+                    onClick={()=>{setBottomChoice("continue")}}>진행중인 채팅</button>
+                    <button
+                    className={bottomChoice === "gonggoo" ? "active" : ""}
+                    onClick={()=>{setBottomChoice("gonggoo")}}>공구 내역</button>
+                    <button
+                    className={bottomChoice === "mygonggoo" ? "active" : ""}
+                    onClick={()=>{setBottomChoice("mygonggoo")}}>내 공구</button>
+                </div>
+
+                <div className='userPage-bottom'>
+
+                </div>
             </div>
         </section>
+    )
+}
+
+function LogoutConfirm({logout, setLogout}) {
+
+    return (
+        <div className='LOC-container'>
+            <div className='LOC-box'>
+                <span>로그아웃 하시겠습니까?</span>
+
+                <div className='LOC-btnBox'>
+                    <button onClick={()=>{logout();}}>예</button>
+                    <button onClick={()=>{
+                        setLogout(false);
+                    }}>아니요</button>
+                </div>
+            </div>
+        </div>
     )
 }
