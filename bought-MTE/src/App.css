@@ -100,6 +100,10 @@
     margin-left: 4px;
   }
 
+#Login-phone {
+  width: 180px;
+}
+
 .Login-PWBox {
   padding: 0px 4px;
 }
@@ -143,6 +147,23 @@
 .Login-submitBox > span {
   color: rgb(212, 38, 38);
   min-height: 24px;
+  font-family: 'Ria';
+}
+
+#Login-address {
+  height: 40px;
+  background-color: transparent;
+  outline: none;
+  border: 1px solid #F7AD72;
+  width: 180px;
+  text-wrap: wrap;
+
+  font-weight: 800;
+}
+
+.Login-addressBtn {
+  height: 40px;
+  background-color: #F7AD72;
   font-family: 'Ria';
 }
 
