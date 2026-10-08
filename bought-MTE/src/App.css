@@ -150,7 +150,7 @@
 
 .Head-container {
   width: 100%;
-  height: 70px;
+  height: 8vh;
   background-color: #F9F9F9;
   display: flex;
   align-items: center;
@@ -195,18 +195,184 @@
   cursor: pointer;
   border-radius: 5px;
   font-family: 'Ria';
+  transition-duration: 0.15s;
 }
-
-.Head-button:hover {
-  background-color: rgba(182, 182, 182, 0.262);
-}
-
-#Head-homeButton {
-  color: #EC9950;
-}
+  .Head-button:hover {
+    background-color: rgba(182, 182, 182, 0.262);
+  }
+  .Head-button.active {
+    color: #EC9950;
+  }
 
 .Head-slash {
   width: 6px;
   height: 30px;
   background-color: black;
 }
+
+/*Main 영역*/
+
+.Main-container {
+  width: 100%;
+  height: 92vh;
+  background-color: #FCEFE3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Main-searchInputBox {
+  margin-top: 40px;
+  width: 75%;
+  height: 61px;
+  border-radius: 1500px;
+  outline:none;
+  border: 3px solid #F7AD72;
+  background-color: #F7D6C3;
+  display: flex;
+  align-items: center;
+  padding: 0px 0px 0px 20px;
+}
+
+.Main-searchInputBox > input {
+  width: 93%;
+  height: 40px;
+  background-color: transparent;
+  outline: none;
+  border: 0px;
+  font-size: 24px;
+}
+
+.Main-searchInputBox > button {
+  width: 5%;
+  height: 100%;
+  border: 0px;
+  outline: none;
+  border-left: 3px solid #F7AD72;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 50px;
+  cursor: pointer;
+}
+
+.Main-searchInputBox > button > img {
+  margin-left: 8px;
+  width: 50px;
+}
+
+.Main-boxTitle {
+  width: 94%;
+  display: flex;
+  justify-content: flex-start;
+  font-family: 'Ria';
+  margin-top: 24px;
+  gap: 28px;
+}
+
+.Main-boxTitle > span {
+  font-size: 30px;
+}
+
+.Main-boxTitle > button {
+  width: 140px;
+  border-radius: 400px;
+  outline: none;
+  border: 1px solid #EC9950;
+  background-color: white;
+  font-family: 'Ria';
+  font-size: 20px;
+  cursor: pointer;
+  transition-duration: 0.15s;
+}
+  .Main-boxTitle > button.active {
+    background-color: #F7AD72;
+  }
+
+.Main-box {
+  width: 96%;
+  height: 72%;
+  background-color: #F9F9F9;
+  border-radius: 50px;
+  margin-top: 8px;
+}
+
+/*userPage 영역 */
+
+.userPage-container {
+  width: 100%;
+  height: 92vh;
+  background-color: #FFE8D6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userPage-box {
+  width: 96%;
+  height: 90%;
+  background-color: white;
+  border-radius: 45px;
+  padding: 35px;
+}
+
+.userPage-userBox {
+  display: flex;
+  gap: 20px;
+}
+
+.userPage-userProfile {
+  width: 270px;
+  height: 270px;
+  border-radius: 50%;
+  background-color: #fcc9b4;
+  border: 4px solid #B85C38;  
+}
+
+.userPage-profileRightside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userPage-boughtCount {
+  font-family: 'Ria';
+  font-size: 35px;
+  font-weight: 400;
+}
+
+.userPage-userPageBottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 90%;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.userPage-userName {
+  font-family:'Ria';
+  font-size: 48px;
+}
+.userPage-userEmail {
+  font-family: 'Ria';
+  font-size: 20;
+}
+
+.userPage-btnBox {
+  display: flex;
+  gap: 20px;
+}
+
+.userPage-btnBox > button {
+  width: 137px;
+  height: 50px;
+  background-color: #FFB266;
+  border: 1px solid #B85C38;
+  border-radius: 20px;
+  font-family: 'Ria';
+  font-size: 23px;
+  cursor: pointer;
+}
+  .userPage-btnBox > button:hover {
+    background-color: #B85C38;
+  }

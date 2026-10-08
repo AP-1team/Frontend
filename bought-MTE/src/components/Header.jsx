@@ -1,10 +1,22 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route, Link, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 
 import icon from '../assets/HomeIcon.png'
 
 
-export default function Header() {
+export default function Header({navibar, setNavibar}) {
+
+    const navigate = useNavigate();
+
+    const homeClicked = () => {
+        setNavibar("home");
+        navigate('/');
+    }
+
+    const userPageClicked = () => {
+        setNavibar("userPage");
+        navigate('/userPage');
+    }
     
     return (
         <div className='Head-container'>
@@ -14,9 +26,11 @@ export default function Header() {
             </div>
 
             <div className='Head-rightSide'>
-                <button className='Head-button' id='Head-homeButton'>홈</button>
+                <button className={navibar === "home" ? "Head-button active" : "Head-button"}
+                onClick={()=>{homeClicked()}}>홈</button>
                 <div className='Head-slash'></div>
-                <button className='Head-button' id='Head-userButton'>유저 페이지</button>
+                <button className={navibar === "userPage" ? "Head-button active" : "Head-button"}
+                onClick={()=>{userPageClicked()}}>유저 페이지</button>
             </div>
         </div>
     )
