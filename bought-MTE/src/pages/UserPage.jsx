@@ -9,34 +9,26 @@ export default function UserPage() {
     const [logOut, setLogout] = useState(false);
     const [bottomChoice, setBottomChoice] = useState("continue");
 
-    const [user, setUser] = useState({ //임시 유저 정보
-        "id": 1,
-        "username": "김OO",
-        "phone": "010-1013-0524",
-        "address": "우리집",
-        "boughtCount": 20,
-    })
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    // const [user, setUser] = useState(null);
-    // const [loading, setLoading] = useState(true);
-
-    // useEffect(() => {
-    //     fetch('/api/users/me')
-    //         .then((res) => {
-    //             if(!res.ok) {
-    //                 throw new Error("유저 정보를 불러오지 못했습니다.");
-    //             }
-    //             return res.json();
-    //         })
-    //         .then((data) => {
-    //             setUser(data);
-    //             setLoading(false);
-    //         })
-    //         .catch((err) => {
-    //             setLoading(false);
-    //             console.error("로그인 중 에러 발생:",err);
-    //         })
-    // }, []);
+    useEffect(() => {
+        fetch('/jjabUser.json')
+            .then((res) => {
+                if(!res.ok) {
+                    throw new Error("유저 정보를 불러오지 못했습니다.");
+                }
+                return res.json();
+            })
+            .then((data) => {
+                setUser(data.data.user);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setLoading(false);
+                console.error("로그인 중 에러 발생:",err);
+            })
+    }, []);
 
     const logout = () => {
         navigate('/login');

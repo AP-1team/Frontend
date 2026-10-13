@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "data": {
+    "user": {
+      "id": 1,
+      "username": "BigBoss",
+      "phone": "010-1013-1013",
+      "address": "Diamond Dogs",
+      "boughtCount" : 20
+    }
+  }
+ }
