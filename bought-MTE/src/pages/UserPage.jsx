@@ -11,7 +11,7 @@ export default function UserPage() {
 
     const [user, setUser] = useState({ //임시 유저 정보
         "id": 1,
-        "username": "UserID",
+        "username": "김OO",
         "phone": "010-1013-0524",
         "address": "우리집",
         "boughtCount": 20,

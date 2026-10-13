@@ -10,11 +10,11 @@ import Main from './pages/Main.jsx'
 import UserPage from './pages/UserPage.jsx'
 
 
-function MainLayer({navibar, setNavibar}) {
+function MainLayer() {
 
   return (
     <>
-      <Header navibar={navibar} setNavibar={setNavibar}/>
+      <Header/>
       <Outlet/>
     </>
   )
@@ -22,12 +22,10 @@ function MainLayer({navibar, setNavibar}) {
 
 function App() {
 
-  const [navibar, setNavibar] = useState("home");
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<MainLayer navibar={navibar} setNavibar={setNavibar}/>}>
+        <Route element={<MainLayer/>}>
           <Route path='/' element={<Main/>}/>
           <Route path='/userPage' element={<UserPage/>}/>
         </Route>

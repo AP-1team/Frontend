@@ -1,0 +1,40 @@
+{
+  "success": true,
+  "data": {
+    "groups": [
+      {
+        "id": 1,
+        "title": "신라면 5개 공동구매",
+        "category": "식품",
+        "price": 15000,
+        "targetCount": 5,
+        "currentCount": 3,
+        "status": "RECRUITING",
+        "deadline": "2026-09-15T23:59:59"
+      },
+      {
+        "id": 2,
+        "title": "삼다수 2L 12팩 같이 사실 분",
+        "category": "식품",
+        "price": 12000,
+        "targetCount": 4,
+        "currentCount": 4,
+        "status": "COMPLETED",
+        "deadline": "2026-09-10T18:00:00"
+      },
+      {
+        "id": 3,
+        "title": "휴지 30롤 대용량 셰어",
+        "category": "생활용품",
+        "price": 24000,
+        "targetCount": 3,
+        "currentCount": 1,
+        "status": "RECRUITING",
+        "deadline": "2026-09-20T23:59:59"
+      }
+    ],
+    "page": 1,
+    "totalPages": 4,
+    "totalCount": 37
+  }
+}
