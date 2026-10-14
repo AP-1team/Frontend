@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import searchIcon from '../assets/searchIcon.png';
@@ -6,6 +6,7 @@ import apple from '../assets/apple.png';
 import box from '../assets/box.png';
 
 function DeadlineTimer({ deadline }) {
+
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0, isExpired: false });
 
     useEffect(() => {
@@ -45,7 +46,10 @@ function DeadlineTimer({ deadline }) {
     );
 }
 
-export default function Main() {
+export default function Main({selectPost, setSelectPost}) {
+
+    const navigate = useNavigate();
+
     const [mainButton, setMainButton] = useState("lastest");
     const [post, setPost] = useState();
     const [loading, setLoading] = useState(true);
@@ -99,7 +103,10 @@ export default function Main() {
 
                 <div className='Main-boxRightside'>
                     {post?.data?.groups?.map((group) => (
-                        <div key={group.id} className='Main-post'>
+                        <div key={group.id} className='Main-post' onClick={()=>{
+                            setSelectPost(group);
+                            navigate(`/post/${group.id}`);
+                        }}>
                             <div className='Main-postPhoto'></div>
 
                             <h1>{group.title}</h1>
@@ -117,7 +124,9 @@ export default function Main() {
                                 <span>남은 시간: <DeadlineTimer deadline={group.deadline} /></span>
                             </div>
 
-                            <button className='Main-joinBtn'>참여하기</button>
+                            <button className='Main-joinBtn' onClick={() => {
+                                alert("개발 중");
+                            }}>참여하기</button>
                         </div>
                     ))}
                 </div>
