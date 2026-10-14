@@ -373,6 +373,7 @@ a {
   box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.155);
   border-radius: 20px;
   background-color: white;
+  cursor: pointer;
 
   display: flex;
   flex-direction: column;
@@ -422,7 +423,6 @@ a {
   font-family: 'Ria';
   font-size: 15px;
   color: #7C7C7C;
-  text-decoration: line-through;
 }
   .Main-beforePrice::after {
   content: '';
@@ -545,7 +545,7 @@ a {
   cursor: pointer;
 }
   .userPage-btnBox > button:hover {
-    background-color: #B85C38;
+    background-color: #fb7c49;
   }
 
 .userPage-bottomChoice {
@@ -624,3 +624,143 @@ a {
   .LOC-btnBox > button:hover {
     background-color: #f69241;
   }
+
+/*Post 영역 (게시글 자세히 보기)*/
+
+.Post-container {
+  width: 100%;
+  height: 92vh;
+  background-color: #FFE8D6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Post-box {
+  width: 95%;
+  height: 90%;
+  background-color: white;
+  border-radius: 40px;
+  display: flex;
+}
+
+.Post-leftside {
+  width: 35%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.4rem 0rem;
+  align-items: center;
+}
+
+.Post-image {
+  width: 90%;
+  aspect-ratio: 1/ 1;
+  border: 4px solid #B85C38;
+  border-radius: 50px;
+}
+
+.Post-chatBtn {
+  background-color: #FFB266;
+  width: 65%;
+  border-radius: 20px;
+  height: 5rem;
+  font-family: 'Ria';
+  font-size: 35px;
+  margin-top: 1.5rem;
+  border: 1px solid #B85C38;
+  cursor: pointer;
+}
+
+.Post-remainTime {
+  font-family: 'Ria';
+  font-size: 30px;
+  margin-top: 1.5rem;
+}
+  .Post-remainTime > span {
+    color: #FF1414;
+  }
+
+.Post-rightside {
+  width: 65%;
+  min-height: 74%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: flex-start;
+}
+  .Post-rightside span {
+    font-family: 'Ria';
+  }
+
+.Post-rightside > h1 {
+  font-family: 'Ria';
+  font-size: 40px;
+}
+
+.Post-beforePrice {
+  font-family: 'Ria';
+  font-size: 15px;
+  color: #7C7C7C;
+  position: relative;
+  text-decoration: line-through;
+  font-size: 22px;
+
+  margin-top: 1.5rem;
+}
+
+.Post-priceBox {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.Post-afterPrice {
+  font-size: 45px;
+  color: #FF0000;
+}
+.Post-count {
+  font-size: 18px;
+}
+
+.Post-description {
+  margin-top: 1.5rem;
+  font-size: 20px;
+  margin-bottom: 1.5rem;
+}
+
+.Post-desBox {
+  display: flex;
+  flex-direction: column;
+}
+.Post-desBox > span {
+  font-size: 20px;
+}
+
+.Post-remainCount {
+  color: #F10F0F;
+}
+
+.Post-userBox {
+  display: flex;
+  margin-top: 1.4rem;
+  gap: 1.5rem;
+}
+
+.Post-userProfile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.Post-userImage {
+  width: 4.5rem;
+  height: 4.5rem;
+  border: 4px solid #B85C38;
+  border-radius: 50%;
+  background-color: #F7AD72;
+}
+
+.Post-userProfile > span {
+  font-size: 24px;
+}
