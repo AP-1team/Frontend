@@ -1,0 +1,21 @@
+{
+  "success": true,
+  "data": {
+    "group": {
+      "id": 10,
+      "title": "신라면 5개 공동구매",
+      "description": "마트 특가로 신라면 묶음 나눠사요",
+      "category": "식품",
+      "price": 15000,
+      "targetCount": 5,
+      "currentCount": 3,
+      "status": "RECRUITING",
+      "deadline": "2026-09-15T23:59:59",
+      "author": { "id": 1, "username": "gunmaek1" },
+      "participants": [
+        { "id": 1, "username": "gunmaek1" },
+        { "id": 2, "username": "yachijinu" }
+      ]
+    }
+  }
+}
