@@ -12,9 +12,27 @@ a {
 
 @font-face {
     font-family: 'Ria';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/RiaSans-ExtraBold.woff2') format('woff2');
+    src: url('../public/RiaSans/RiaSans-Bold.ttf');
     font-weight: normal;
     font-display: swap;
+}
+
+body {
+  overflow: hidden;
+}
+
+.fade-in {
+  animation: fadeIn 0.35s forwards;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 
@@ -322,6 +340,7 @@ a {
   margin-top: 8px;
   padding: 1.5rem 1rem;
   display: flex;
+  position: relative;
 }
 
 .Main-boxLeftside {
@@ -466,6 +485,28 @@ a {
   margin-top: 1.3rem;
   cursor: pointer;
 }
+
+.Main-add {
+  width: 7rem;
+  height: 7rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  border-radius: 5000px;
+  outline: none;
+  border: 0px;
+  background-color: #FFB266;
+  font-size:105px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 100;
+  cursor: pointer;
+}
+  .Main-add:hover {
+    background-color: #ff9f3e;
+  }
 
 /*userPage 영역 */
 
@@ -763,4 +804,202 @@ a {
 
 .Post-userProfile > span {
   font-size: 24px;
+}
+
+.Post-errorText {
+  color: red;
+}
+
+/*Chat 영역*/
+
+.Chat-container {
+  width: 100%;
+  height: 92vh;
+  background-color: #FFE8D6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Chat-box {
+  width: 95%;
+  height: 90%;
+  background-color: white;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.Chat-chatList {
+  width: 22%;
+  height: 100%;
+  display: flex;
+  flex-direction: column; 
+}
+
+.Chat-chatBox {
+  border: 2px solid #B85C38;
+  border-radius: 50px;
+  background-color: #FCEFE3;
+  width: 75.4%;
+  height: 95%;
+  margin-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  position: relative;
+  gap: 2rem;
+}
+
+.Chat-chat.my {
+  align-self: flex-end;
+}
+.Chat-chat.my > .Chat-text {
+  border: 3px solid #F7AD72;
+  background-color: #F9F9F9;
+  border-radius: 5000px;
+  font-family: 'Ria';
+  font-size: 24px;
+  padding: 0.7rem 1rem;
+}
+
+.Chat-chat.other {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.Chat-chat.other > .Chat-profile {
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 4px solid #B85C38;
+  border-radius: 50%;
+  background-color: #EC9950;
+}
+
+.Chat-chat.other > .Chat-text {
+  border: 3px solid #F7AD72;
+  background-color: #F9F9F9;
+  border-radius: 5000px;
+  font-family: 'Ria';
+  font-size: 24px;
+  padding: 0.7rem 1rem;
+}
+
+.Chat-inputBox {
+  width: 95.4%;
+  min-height: 4rem;
+  background-color: #F7D6C3;
+  border: 3px solid #F7AD72;
+  border-radius: 5000px;
+  position: absolute;
+  bottom: 1.5rem;
+  align-self: center;
+  display: flex;
+  align-items: center;
+}
+  .Chat-inputBox:has(textarea:focus) {
+    border: 3px solid #fe9c4c;
+  }
+
+.Chat-inputBox > textarea {
+  min-height: 2.5rem;
+  font-size: 24px;
+  font-family: 'Ria';
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  text-wrap: wrap;
+  overflow-wrap: wrap;
+  resize: none;
+  /* field-sizing: content; */
+  outline: none;
+  max-height: 6rem;
+}
+
+.Chat-submit {
+  width: 6rem;
+  min-height: 4rem;
+  flex-shrink: 0;
+  border-left: 3px solid #F7AD72;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  cursor: pointer;
+  border-radius: 0px 5000px 5000px 0px;
+  color: white;
+  background-color: transparent;
+  font-family: 'Ria';
+  font-size: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Chat-applyBtn {
+  border-radius: 5000px 0px 0px 5000px;
+  min-height: 4rem;
+  width: 15rem;
+  background-color: transparent;
+  outline: none;
+  border: 0px;
+  border-right: 3px solid #F7AD72;
+  cursor: pointer;
+
+  font-family: 'Ria';
+  font-size: 24px;
+  margin-right: 1rem;
+}
+
+/*Upload 영역*/
+
+.Upload-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ria';
+  font-size: 40px;
+}
+
+.Upload-rightside {
+  width: 65%;
+  min-height: 74%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: flex-start;
+  gap: 1.3rem;
+}
+
+.Upload-rightside > div {
+  display: flex;
+}
+.Upload-rightside > div > label {
+  font-family: 'Ria';
+  font-size: 35px;
+}
+.Upload-rightside > div > input {
+  min-width: 75%;
+  border: none;
+  outline: none;
+  font-family: 'Ria';
+  font-size: 35px;
+}
+.Upload-rightside > div > textarea {
+  resize: none;
+  min-width: 75%;
+  max-height: 18rem;
+  border: none;
+  outline: none;
+  font-family: 'Ria';
+  font-size: 35px;
+}
+  .Upload-rightside > div > textarea:focus {
+    border: 1px solid black;
+  }
+
+#Upload-deadline {
+  min-width: 40%;
 }

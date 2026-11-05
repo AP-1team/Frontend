@@ -124,12 +124,14 @@ export default function Main({selectPost, setSelectPost}) {
                                 <span>남은 시간: <DeadlineTimer deadline={group.deadline} /></span>
                             </div>
 
-                            <button className='Main-joinBtn' onClick={() => {
-                                alert("개발 중");
-                            }}>참여하기</button>
+                            <button className='Main-joinBtn'>참여하기</button>
                         </div>
                     ))}
                 </div>
+
+                <button className='Main-add' onClick={()=>{
+                    navigate('/upload');
+                }}>+</button>
             </div>
         </div>
     )

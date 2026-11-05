@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Link, Outlet, useParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Outlet, useParams, useNavigate } from 'react-router-dom';
 
 function DeadlineTimer({ deadline }) {
 
@@ -44,6 +44,8 @@ function DeadlineTimer({ deadline }) {
 
 export default function Post() {
 
+    const navigate = useNavigate();
+
     const id = useParams();
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -60,7 +62,11 @@ export default function Post() {
                 }
                 setLoading(false);
             })
-    })
+    },[])
+
+    const goToChat = () => {
+        navigate(`/userPage/chat/1`)
+    }
 
     return (
         <main className='Post-container'>
@@ -71,7 +77,9 @@ export default function Post() {
                 <section className='Post-leftside'>
                     <div className='Post-image'></div>
 
-                    <button className='Post-chatBtn'>채팅으로 가기</button>
+                    <button className='Post-chatBtn' onClick={()=>{
+                        goToChat();
+                    }}>채팅으로 가기</button>
                     <span className='Post-remainTime'>남은 시간: <DeadlineTimer deadline={post?.deadline} /></span>
                 </section>
 
