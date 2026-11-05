@@ -85,8 +85,6 @@ export default function Main({selectPost, setSelectPost}) {
 
                 <button className={mainButton === "lastest" ? "active Main-LastestBtn" : "Main-LastestBtn"}
                     onClick={()=>{setMainButton("lastest")}}>최신순</button>
-                <button className={mainButton === "period" ? "active Main-periodBtn" : "Main-periodBtn"}
-                    onClick={()=>{setMainButton("period")}}>기간 임박</button>
             </div>
 
             <div className='Main-box'>
