@@ -93,13 +93,6 @@ export default function Main({selectPost, setSelectPost}) {
 
             <div className='Main-box'>
                 {loading && <p>로딩 중...</p>}
-                <div className='Main-boxLeftside'>
-                    <div className='Main-categoryBox'>
-                        <button>식료품<img src={apple} alt="식료품"/></button>
-                        <button>소모품<img src={box} alt="소모품"/></button>
-                        <button></button>
-                    </div>
-                </div>
 
                 <div className='Main-boxRightside'>
                     {post?.data?.groups?.map((group) => (
