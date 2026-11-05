@@ -12,6 +12,7 @@ export default function Chat() {
     const [totalPage, setTotalPage] = useState(1);
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
+    const [enteringText, setEnteringText] = useState(null);
 
     useEffect(() => {
         fetch('/jjabUser.json')
@@ -49,6 +50,22 @@ export default function Chat() {
             })
     },[roomId, page]);
 
+    const messageSent = () => {
+        fetch('/api/groups/10/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "content": enteringText
+            })
+        })
+        .then((res) => res.json())
+        .catch((err) => {
+            console.error("채팅을 보내다 에러 발생:",err);
+        })
+    }
+
     return (
         <div className='Chat-container'>
             <div className='Chat-box'>
@@ -78,8 +95,12 @@ export default function Chat() {
                         <button className='Chat-applyBtn'>
                             구매 신청
                         </button>
-                        <textarea rows='1'/>
-                        <button type='button' className='Chat-submit'>
+                        <textarea rows='1' onChange={(e)=>{
+                            setEnteringText(e.target.value);
+                        }} value={enteringText}/>
+                        <button type='button' className='Chat-submit' onClick={()=>{
+                            messageSent();
+                        }}>
                             <img src={send}/>
                         </button>
                     </div>
