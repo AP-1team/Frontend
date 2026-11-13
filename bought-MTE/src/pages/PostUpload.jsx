@@ -115,7 +115,8 @@ export default function PostUpload() {
                         placeholder='가격을 입력해주세요' onChange={(e) => {
                             setPrice(e.target.value);
                             inputHandle();
-                        }} value={price}/>
+                        }} value={price}
+                        type='number'/>
                     </div>
 
                     <div>
@@ -124,7 +125,8 @@ export default function PostUpload() {
                         placeholder='인원수를 입력해주세요' onChange={(e) => {
                             setPeople(e.target.value);
                             inputHandle();
-                        }} value={people}/>
+                        }} value={people}
+                        type='number'/>
                     </div>
 
                     <div>
