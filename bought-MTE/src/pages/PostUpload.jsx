@@ -14,9 +14,6 @@ export default function PostUpload() {
 
     const [error, setError] = useState("");
 
-    const Upload = () => {
-
-    }
 
     const textAreaRef = useRef(null);
 
