@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react'
 import { RiDeepseekFill } from 'react-icons/ri';
 import { BrowserRouter, Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
 
+import bell from '../assets/bell.png'
+
+
 export default function UserPage() {
 
     const navigate = useNavigate();
     
     const [logOut, setLogout] = useState(false);
+    const [alarm, setAlarm] = useState(false);
     const [bottomChoice, setBottomChoice] = useState("continue");
 
     const [user, setUser] = useState(null);
@@ -42,6 +46,13 @@ export default function UserPage() {
             )}
             <div className='userPage-box'>
                 <div className='userPage-userBox'>
+                    <img src={bell} className='userPage-bell' onClick={()=>{
+                        setAlarm(alarm ? false : true)
+                    }}/>
+                    {alarm && (
+                        <Alarm/>
+                    )}
+
                     <div className='userPage-userProfile'>
 
                     </div>
@@ -95,6 +106,15 @@ function LogoutConfirm({logout, setLogout}) {
                     }}>아니요</button>
                 </div>
             </div>
+        </div>
+    )
+}
+
+function Alarm({}) {
+
+    return (
+        <div className='alarm-container'>
+        
         </div>
     )
 }

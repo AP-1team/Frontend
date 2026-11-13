@@ -491,6 +491,7 @@ body {
   background-color: white;
   border-radius: 45px;
   padding: 35px;
+  position: relative;
 }
 
 .userPage-userBox {
@@ -585,6 +586,14 @@ body {
   display: flex;
 }
 
+.userPage-bell {
+  position: absolute;
+  width: 5rem;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
 /*LOC 영역 (LogOutConfirm)*/
 
 .LOC-container {
@@ -595,6 +604,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.326);
+  z-index: 9999999999999;
 }
 
 .LOC-box {
@@ -968,4 +978,18 @@ body {
 
 #Upload-deadline {
   min-width: 40%;
+}
+
+/*alarm 영역*/
+
+.alarm-container {
+  position: absolute;
+  width: 25rem;
+  height: 32rem;
+  background-color: #FCEFE3;
+  border: 2px solid #B85C38;
+  position: absolute;
+  top: 10px;
+  right: 100px;
+  border-radius: 50px;
 }
