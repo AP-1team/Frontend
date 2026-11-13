@@ -65,9 +65,9 @@ export default function UserPage() {
                         <div className='userPage-userPageBottom'>
                             <span className='userPage-userName'>{user?.username}</span>
                             <div className='userPage-btnBox'>
-                                <button>정보 변경</button>
                                 <button onClick={()=>{setLogout(true)}}>로그 아웃</button>
                             </div>
+                            <span className='userPage-coin'>현재 보유 코인 : </span>
                         </div>
                     </div>
                 </div>

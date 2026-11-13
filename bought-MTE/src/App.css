@@ -586,6 +586,11 @@ body {
   display: flex;
 }
 
+.userPage-coin {
+  font-family: 'Ria';
+  font-size: 32px;
+}
+
 .userPage-bell {
   position: absolute;
   width: 5rem;
