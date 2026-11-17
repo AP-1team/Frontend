@@ -1,0 +1,11 @@
+{
+  "installCommand": "npm install --prefix bought-MTE",
+  "buildCommand": "npm run build --prefix bought-MTE",
+  "outputDirectory": "bought-MTE/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
