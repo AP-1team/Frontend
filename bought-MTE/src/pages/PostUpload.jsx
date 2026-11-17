@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
-import { BrowserRouter, Routes, Route, Link, Outlet, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { api } from '../api.js';
 
 export default function PostUpload() {
 
@@ -8,11 +9,14 @@ export default function PostUpload() {
     const [postName, setPostName] = useState("");
     const [price, setPrice] = useState("");
     const [people, setPeople] = useState("");
+    const [quantity, setQuantity] = useState("");
     const [deadline, setDeadline] = useState("");
     const [location, setLocation] = useState("");
     const [description, setDescription] = useState("");
 
     const [error, setError] = useState("");
+    const [image, setImage] = useState("");
+    const [submitting, setSubmitting] = useState(false);
 
 
     const textAreaRef = useRef(null);
@@ -29,17 +33,37 @@ export default function PostUpload() {
         setError("");
     }
 
-    const submit = () => {
+    const selectImage = (event) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024) {
+            setError('PNG, JPEG, WEBP 형식의 5MB 이하 이미지만 올릴 수 있습니다.');
+            event.target.value = '';
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => setImage(String(reader.result));
+        reader.onerror = () => setError('이미지를 읽지 못했습니다.');
+        reader.readAsDataURL(file);
+        setError('');
+    };
+
+    const submit = async (event) => {
+        event.preventDefault();
         if (postName === "") {
             setError("상품명을 입력해주세요");
             return;
         }
-        else if(price === "") {
+        else if(price === "" || Number(price) < 1) {
             setError("가격을 입력해주세요");
             return;
         }
-        else if(people === "") {
-            setError("인원을 입력해주세요");
+        else if(Number(people) < 2 || Number(people) > 50) {
+            setError("모집 인원은 2~50명이어야 합니다.");
+            return;
+        }
+        else if(quantity === "" || Number(quantity) % Number(people) !== 0) {
+            setError("총 수량은 모집 인원으로 나누어 떨어져야 합니다.");
             return;
         }
         else if(deadline === "") {
@@ -50,56 +74,43 @@ export default function PostUpload() {
             setError("모집 지역을 입력해주세요");
             return;
         }
-        else if(description === "") {
-            setError("상품설명을 입력해주세요");
-            return;
+        setSubmitting(true);
+        try {
+            await api.createGroup({
+                title: postName,
+                description,
+                price: Number(price),
+                targetCount: Number(people),
+                quantity: Number(quantity),
+                deadline: deadline.length === 16 ? `${deadline}:00` : deadline,
+                region: location,
+                image: image || undefined,
+            });
+            navigate('/');
+        } catch (requestError) {
+            setError(requestError.message || '모집방 등록에 실패했습니다.');
+        } finally {
+            setSubmitting(false);
         }
-
-        fetch('/api/groups', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                "title": postName,
-                "description": description,
-                "price": price,
-                "targetCount": people,
-                "deadline": deadline
-            })
-        })
-        .then((res) => res.json())
-        .then((res) => {
-            if(res.success) {
-                console.log("글 업로드 성공");
-                navigate('/');
-            } else {
-                console.log("글 업로드 실패");
-                setError("글 업로드에 실패했습니다.");
-            }
-        })
-        .catch((err) => {
-            console.error("글 업로드 중 에러 발생:",err);
-            setError("서버 통신 오류");
-        })
     }
 
     return (
         <main className='Post-container'>
             <div className='Post-box'>
                 <section className='Post-leftside'>
-                    <div className='Post-image Upload-image'>이미지 추가하기</div>
+                    <label className='Post-image Upload-image'>
+                        {image ? <img src={image} alt='상품 미리보기'/> : '이미지 추가하기'}
+                        <input type='file' accept='image/png,image/jpeg,image/webp' onChange={selectImage}/>
+                    </label>
 
-                    <button className='Post-chatBtn' onClick={()=>{
-                        submit();
-                    }}>완료</button>
+                    <button className='Post-chatBtn' type='submit' form='group-create-form' disabled={submitting}>{submitting ? '등록 중...' : '완료'}</button>
                     <p className='Post-errorText'>{error}</p>
                 </section>
 
-                <section className='Upload-rightside'>
+                <form id='group-create-form' className='Upload-rightside' onSubmit={submit}>
                     <div>
-                        <label for="Upload-postName">상품명:</label>
-                        <input id='Upload-postName'
+                        <label htmlFor="Upload-postName">상품명:</label>
+                        <input id='Upload-postName' maxLength={100}
                         placeholder='상품명을 입력해주세요' onChange={(e) => {
                             setPostName(e.target.value);
                             inputHandle();
@@ -107,8 +118,8 @@ export default function PostUpload() {
                     </div>
 
                     <div>
-                        <label for="Upload-price">가격:</label>
-                        <input id='Upload-price'
+                        <label htmlFor="Upload-price">가격:</label>
+                        <input id='Upload-price' min='1'
                         placeholder='가격을 입력해주세요' onChange={(e) => {
                             setPrice(e.target.value);
                             inputHandle();
@@ -117,8 +128,8 @@ export default function PostUpload() {
                     </div>
 
                     <div>
-                        <label for="Upload-people">인원:</label>
-                        <input id='Upload-people'
+                        <label htmlFor="Upload-people">모집 인원:</label>
+                        <input id='Upload-people' min='2' max='50'
                         placeholder='인원수를 입력해주세요' onChange={(e) => {
                             setPeople(e.target.value);
                             inputHandle();
@@ -127,8 +138,13 @@ export default function PostUpload() {
                     </div>
 
                     <div>
-                        <label for="Upload-deadline">마감 기한:</label>
-                        <input id='Upload-deadline' type='date'
+                        <label htmlFor="Upload-quantity">총 수량:</label>
+                        <input id='Upload-quantity' min='1' type='number' placeholder='상품 전체 수량' onChange={(e) => { setQuantity(e.target.value); inputHandle(); }} value={quantity}/>
+                    </div>
+
+                    <div>
+                        <label htmlFor="Upload-deadline">마감 기한:</label>
+                        <input id='Upload-deadline' type='datetime-local' min={new Date().toISOString().slice(0, 16)}
                         placeholder='' onChange={(e) => {
                             setDeadline(e.target.value);
                             inputHandle();
@@ -136,8 +152,8 @@ export default function PostUpload() {
                     </div>
 
                     <div>
-                        <label for="Upload-location">모집 지역:</label>
-                        <input id='Upload-location'
+                        <label htmlFor="Upload-location">모집 지역:</label>
+                        <input id='Upload-location' maxLength={100}
                         placeholder='모집 지역을 명시해주세요' onChange={(e) => {
                             setLocation(e.target.value);
                             inputHandle();
@@ -145,7 +161,7 @@ export default function PostUpload() {
                     </div>
 
                     <div>
-                        <label for="Upload-des">상품 설명:</label>
+                        <label htmlFor="Upload-des">상품 설명:</label>
                         <textarea id='Upload-des'
                         ref={textAreaRef}
                         placeholder='상품 설명을 입력해주세요'
@@ -154,10 +170,10 @@ export default function PostUpload() {
                             setDescription(e.target.value);
                             inputHandle();
                         }} value={description}
-                        rows="1"/>
+                        rows="1" maxLength={2000}/>
                     </div>
 
-                </section>
+                </form>
             </div>
         </main>
     )

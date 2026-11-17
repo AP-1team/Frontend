@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route, Link, Outlet, useLocation } from 'react-router-dom';
+import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import './App.css'
 
@@ -29,15 +29,25 @@ function FadeIn({ children }) {
   return <div key={location.key} className="fade-in">{children}</div>
 }
 
+function SessionExpiryRedirect() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const redirectToLogin = () => navigate('/login', { replace: true })
+    window.addEventListener('auth:expired', redirectToLogin)
+    return () => window.removeEventListener('auth:expired', redirectToLogin)
+  }, [navigate])
+
+  return null
+}
+
 function App() {
-
-  const [selectPost, setSelectPost] = useState(null);
-
   return (
     <BrowserRouter>
+      <SessionExpiryRedirect />
       <Routes>
         <Route element={<MainLayer/>}>
-          <Route path='/' element={<FadeIn><Main selectPost={selectPost} setSelectPost={setSelectPost}/></FadeIn>}/>
+          <Route path='/' element={<FadeIn><Main/></FadeIn>}/>
           <Route path='/userPage' element={<FadeIn><UserPage/></FadeIn>}/>
           <Route path='/post/:id' element={<FadeIn><Post/></FadeIn>}/>
           <Route path='userPage/chat/:id' element={<FadeIn><Chat/></FadeIn>}/>

@@ -1,9 +1,8 @@
-import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import searchIcon from '../assets/searchIcon.png';
-import apple from '../assets/apple.png';
-import box from '../assets/box.png';
+import { api, getAccessToken, resolveMediaUrl } from '../api.js';
 
 function DeadlineTimer({ deadline }) {
 
@@ -46,77 +45,116 @@ function DeadlineTimer({ deadline }) {
     );
 }
 
-export default function Main({selectPost, setSelectPost}) {
+export default function Main() {
 
     const navigate = useNavigate();
 
-    const [mainButton, setMainButton] = useState("lastest");
-    const [post, setPost] = useState();
+    const [keyword, setKeyword] = useState('');
+    const [searchValue, setSearchValue] = useState('');
+    const [groups, setGroups] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    const [joiningId, setJoiningId] = useState(null);
 
     useEffect(() => {
-        fetch('/jjabPost.json')
-            .then((res) => {
-                if(!res.ok) {
-                    throw new Error("게시글을 불러오지 못함");
-                }
-                return res.json();
+        let cancelled = false;
+        api.getGroups({ keyword, page })
+            .then((result) => {
+                if (cancelled) return;
+                setGroups(result?.groups || []);
+                setTotalPages(result?.totalPages || 1);
             })
-            .then((data) => {
-                setPost(data);
-                setLoading(false);
-            })  
-            .catch((err) => {
-                setLoading(false);
-                console.error("게시글 불러오는 중 에러 발생:", err);
+            .catch((requestError) => {
+                if (!cancelled) setError(requestError.message);
             })
-    }, []);
+            .finally(() => {
+                if (!cancelled) setLoading(false);
+            });
+        return () => { cancelled = true; };
+    }, [keyword, page]);
+
+    const search = (event) => {
+        event.preventDefault();
+        const nextKeyword = searchValue.trim();
+        setError('');
+        if (nextKeyword !== keyword || page !== 1) setLoading(true);
+        setPage(1);
+        setKeyword(nextKeyword);
+    };
+
+    const joinGroup = async (event, group) => {
+        event.stopPropagation();
+        if (!getAccessToken()) {
+            navigate('/login');
+            return;
+        }
+        setJoiningId(group.id);
+        setError('');
+        try {
+            await api.joinGroup(group.id);
+            navigate(`/userPage/chat/${group.id}`);
+        } catch (requestError) {
+            if (requestError.code === 'ALREADY_JOINED') {
+                navigate(`/userPage/chat/${group.id}`);
+            } else {
+                setError(requestError.message);
+            }
+        } finally {
+            setJoiningId(null);
+        }
+    };
 
     return (
         <div className='Main-container'>
-            <div className='Main-searchInputBox'>
-                <input/>
-                <button>
+            <form className='Main-searchInputBox' onSubmit={search}>
+                <input value={searchValue} onChange={(event) => setSearchValue(event.target.value)} aria-label='상품명 검색' placeholder='찾는 상품을 검색하세요'/>
+                <button type='submit' aria-label='검색'>
                     <img src={searchIcon} alt="검색 아이콘"/>
                 </button>
-            </div>
+            </form>
             <div className='Main-boxTitle'>
                 <span>최근 진행 중인 공동구매</span>
 
-                <button className={mainButton === "lastest" ? "active Main-LastestBtn" : "Main-LastestBtn"}
-                    onClick={()=>{setMainButton("lastest")}}>최신순</button>
+                <span className='Main-LastestBtn active'>최신순</span>
             </div>
 
             <div className='Main-box'>
-                {loading && <p>로딩 중...</p>}
+                {loading && <p className='Main-status'>모집방을 불러오는 중...</p>}
+                {!loading && error && <p className='Main-status Main-error'>{error}</p>}
+                {!loading && !error && groups.length === 0 && <p className='Main-status'>진행 중인 모집방이 없습니다.</p>}
 
                 <div className='Main-boxRightside'>
-                    {post?.data?.groups?.map((group) => (
-                        <div key={group.id} className='Main-post' onClick={()=>{
-                            setSelectPost(group);
-                            navigate(`/post/${group.id}`);
-                        }}>
-                            <div className='Main-postPhoto'></div>
+                    {groups.map((group) => (
+                        <article key={group.id} className='Main-post' onClick={()=>navigate(`/post/${group.id}`)}>
+                            <div className='Main-postPhoto'>{group.imageUrl && <img src={resolveMediaUrl(group.imageUrl)} alt={group.title}/>}</div>
 
                             <h1>{group.title}</h1>
 
                             <div className='Main-priceBox'>
                                 <span className='Main-beforePrice'>
-                                    {group.price}원
+                                    {(group.price || 0).toLocaleString()}코인
                                 </span>
-                                <span className='Main-afterPrice'>{group.price / group.targetCount}원</span>
-                                <span className='Main-count'>{group.targetCount}개 당</span>
+                                <span className='Main-afterPrice'>{(group.perPersonPrice ?? Math.floor(group.price / group.targetCount)).toLocaleString()}코인</span>
+                                <span className='Main-count'>{group.perPersonQuantity ?? group.quantity / group.targetCount}개 당</span>
                             </div>
 
                             <div className='Main-countBox'>
-                                <span>모집 인원 <span>{group.targetCount - group.currentCount}명</span> 남음</span>                                
+                                <span>모집 인원 <span>{Math.max(0, group.targetCount - group.currentCount)}명</span> 남음</span>
                                 <span>남은 시간: <DeadlineTimer deadline={group.deadline} /></span>
                             </div>
 
-                            <button className='Main-joinBtn'>참여하기</button>
-                        </div>
+                            <button className='Main-joinBtn' disabled={joiningId === group.id || group.status !== 'RECRUITING'} onClick={(event) => joinGroup(event, group)}>{joiningId === group.id ? '참여 중...' : group.status === 'RECRUITING' ? '참여하기' : '모집 완료'}</button>
+                        </article>
                     ))}
                 </div>
+
+                {totalPages > 1 && <nav className='Main-pagination' aria-label='페이지 이동'>
+                    <button disabled={page <= 1} onClick={() => { setLoading(true); setPage((current) => current - 1); }}>이전</button>
+                    <span>{page} / {totalPages}</span>
+                    <button disabled={page >= totalPages} onClick={() => { setLoading(true); setPage((current) => current + 1); }}>다음</button>
+                </nav>}
 
                 <button className='Main-add' onClick={()=>{
                     navigate('/upload');

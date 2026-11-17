@@ -18,7 +18,8 @@ a {
 }
 
 body {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .fade-in {
@@ -997,4 +998,743 @@ body {
   top: 10px;
   right: 100px;
   border-radius: 50px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.Main-searchInputBox {
+  flex-shrink: 0;
+}
+
+.Main-searchInputBox > button {
+  display: grid;
+  place-items: center;
+}
+
+.Main-searchInputBox > button > img {
+  width: 2rem;
+  margin: 0;
+}
+
+.Main-box {
+  overflow: auto;
+  align-items: flex-start;
+}
+
+.Main-boxRightside {
+  width: max-content;
+  flex-shrink: 0;
+}
+
+.Main-post {
+  flex: 0 0 16rem;
+}
+
+.Main-postPhoto {
+  overflow: hidden;
+  background: #f3e7dd;
+}
+
+.Main-postPhoto img,
+.Post-image img,
+.Upload-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.Main-status {
+  flex: 0 0 auto;
+  align-self: center;
+  margin: 1rem;
+  font-family: 'Ria';
+}
+
+.Main-error,
+.userPage-error,
+.userPage-feedback,
+.Chat-feedback {
+  color: #b42318;
+}
+
+.Main-pagination {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 1;
+  padding: 0.4rem 0.7rem;
+  border-radius: 20px;
+  background: #fff;
+}
+
+.Main-pagination button {
+  border: 0;
+  background: transparent;
+  color: #8d452d;
+  cursor: pointer;
+  font: inherit;
+}
+
+.Main-LastestBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 7rem;
+  padding: 0.35rem 1rem;
+  border: 1px solid #ec9950;
+  border-radius: 999px;
+  background: #f7ad72;
+}
+
+.Post-image {
+  overflow: hidden;
+  background: #f3e7dd;
+}
+
+.Upload-image {
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.Upload-image input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.Upload-rightside > div > label {
+  flex: 0 0 10rem;
+}
+
+.userPage-box {
+  overflow: visible;
+}
+
+.userPage-bellButton {
+  position: absolute;
+  z-index: 5;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.userPage-bellButton .userPage-bell {
+  position: static;
+  width: 100%;
+}
+
+.userPage-unreadDot,
+.alarm-item i {
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: #d92d20;
+}
+
+.userPage-unreadDot {
+  top: 0.5rem;
+  right: 0.45rem;
+}
+
+.userPage-list {
+  display: block;
+  overflow-y: auto;
+  padding: 0.75rem 1.25rem;
+}
+
+.userPage-row {
+  min-height: 4.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ead2c1;
+}
+
+.userPage-row > img {
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.userPage-rowTitle {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.userPage-delete {
+  border: 1px solid #b85c38;
+  border-radius: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.userPage-status {
+  padding: 1rem;
+}
+
+.userPage-feedback {
+  margin-top: 0.5rem;
+}
+
+.userPage-inlineForm {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.userPage-inlineForm input {
+  min-width: 0;
+  padding: 0.55rem;
+  border: 1px solid #d5aa8b;
+  border-radius: 0.35rem;
+}
+
+.userPage-inlineForm button {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #b85c38;
+  border-radius: 0.35rem;
+  background: #ffb266;
+  cursor: pointer;
+}
+
+.alarm-container {
+  z-index: 10;
+  overflow-y: auto;
+  padding: 1rem;
+  box-shadow: 0 8px 24px #4a2e1f33;
+}
+
+.alarm-container h2 {
+  margin-bottom: 0.75rem;
+  font-family: 'Ria';
+}
+
+.alarm-item {
+  width: 100%;
+  min-height: 3.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  position: relative;
+  padding: 0.5rem 1rem 0.5rem 0;
+  border: 0;
+  border-bottom: 1px solid #ead2c1;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.alarm-item img {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: cover;
+  border-radius: 0.3rem;
+}
+
+.alarm-item i {
+  right: 0.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.Chat-chatBox {
+  min-width: 0;
+  overflow: hidden;
+  gap: 0;
+}
+
+.Chat-chatList {
+  overflow-y: auto;
+  padding: 1rem;
+  gap: 0.5rem;
+}
+
+.Chat-chatList h2 {
+  margin-bottom: 0.75rem;
+  font-family: 'Ria';
+}
+
+.Chat-room {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.Chat-room.active {
+  background: #fcefe3;
+}
+
+.Chat-room img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.35rem;
+  object-fit: cover;
+}
+
+.Chat-roomHeader {
+  min-height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e8cdb8;
+}
+
+.Chat-roomHeader h1 {
+  font: 700 1.25rem 'Ria', sans-serif;
+}
+
+.Chat-roomHeader span,
+.Chat-username {
+  color: #71635b;
+  font-size: 0.8rem;
+}
+
+.Chat-roomHeader button {
+  border: 1px solid #b85c38;
+  border-radius: 0.35rem;
+  padding: 0.45rem 0.7rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.Chat-messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  gap: 0.9rem;
+  padding: 1rem 0 6rem;
+}
+
+.Chat-older {
+  align-self: center;
+  border: 0;
+  background: transparent;
+  color: #8d452d;
+  cursor: pointer;
+}
+
+.Chat-username {
+  display: block;
+  margin: 0 0.4rem 0.2rem;
+}
+
+.Chat-chat.my .Chat-username {
+  text-align: right;
+}
+
+.Chat-chat.my > div > .Chat-text,
+.Chat-chat.other > div > .Chat-text {
+  max-width: min(38rem, 65vw);
+  overflow-wrap: anywhere;
+  border-radius: 1rem;
+}
+
+.Chat-inputBox {
+  position: absolute;
+  gap: 0;
+}
+
+.Chat-inputBox textarea {
+  padding: 0.55rem 0.75rem;
+}
+
+.Chat-inputBox > .Chat-applyBtn {
+  flex: 0 0 10rem;
+  width: 10rem;
+  margin: 0;
+}
+
+.Chat-submit img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
+.Chat-feedback {
+  position: absolute;
+  bottom: 5.75rem;
+  left: 2rem;
+  right: 2rem;
+  z-index: 2;
+  padding: 0.35rem 0.6rem;
+  background: #fff9;
+}
+
+.Chat-paymentCard {
+  width: min(28rem, 90%);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  align-self: center;
+  padding: 0.75rem;
+  border: 1px solid #d7a17e;
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+.Chat-paymentCard img {
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  border-radius: 0.3rem;
+}
+
+.Chat-paymentCard div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.Chat-paymentCard button {
+  border: 1px solid #b85c38;
+  border-radius: 0.35rem;
+  padding: 0.5rem;
+  background: #ffb266;
+  cursor: pointer;
+}
+
+.Chat-approval {
+  padding: 1.5rem;
+}
+
+.Chat-approval > img {
+  width: 8rem;
+  height: 8rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 760px) {
+  .Head-container {
+    height: 4.5rem;
+    padding: 0 0.75rem;
+  }
+
+  .Head-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .Head-title {
+    font-size: 1.5rem;
+  }
+
+  .Head-button {
+    font-size: 1rem;
+  }
+
+  .Head-slash {
+    height: 1.25rem;
+  }
+
+  .Main-container,
+  .Post-container,
+  .userPage-container,
+  .Chat-container {
+    height: auto;
+    min-height: calc(100dvh - 4.5rem);
+    padding: 1rem 0;
+  }
+
+  #group-create-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .Main-searchInputBox > input {
+    width: 85%;
+    font-size: 1rem;
+  }
+
+  .Main-boxTitle {
+    align-items: center;
+  }
+
+  .Main-boxTitle > span {
+    font-size: 1.2rem;
+  }
+
+  .Main-boxTitle > button,
+  .Main-LastestBtn {
+    min-width: auto;
+    width: auto;
+    font-size: 0.9rem;
+  }
+
+  .Main-box {
+    width: 94%;
+    height: 65vh;
+    min-height: 25rem;
+    padding: 1rem 0.5rem;
+    border-radius: 1rem;
+  }
+
+  .Main-boxRightside {
+    margin-left: 0.5rem;
+  }
+
+  .Main-post {
+    width: 14rem;
+    flex-basis: 14rem;
+  }
+
+  .Main-add {
+    width: 3.75rem;
+    height: 3.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    font-size: 3rem;
+  }
+
+  .Post-box {
+    height: auto;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .Post-leftside,
+  .Post-rightside,
+  .Upload-rightside {
+    width: 100%;
+    align-self: stretch;
+  }
+
+  .Post-image {
+    width: min(100%, 22rem);
+    border-radius: 1rem;
+  }
+
+  .Post-chatBtn {
+    width: min(100%, 22rem);
+    height: 3.5rem;
+    font-size: 1.2rem;
+  }
+
+  .Post-remainTime,
+  .Post-rightside > h1,
+  .Post-afterPrice {
+    font-size: 1.5rem;
+  }
+
+  .Upload-rightside > div {
+    gap: 0.5rem;
+  }
+
+  .Upload-rightside > div > label {
+    flex-basis: 6rem;
+    font-size: 1rem;
+  }
+
+  .Upload-rightside > div > input,
+  .Upload-rightside > div > textarea {
+    min-width: 0;
+    font-size: 1rem;
+  }
+
+  .userPage-box {
+    width: 94%;
+    height: auto;
+    min-height: 80vh;
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .userPage-userProfile {
+    width: 5rem;
+    height: 5rem;
+    flex-shrink: 0;
+  }
+
+  .userPage-boughtCount,
+  .userPage-coin {
+    font-size: 1rem;
+  }
+
+  .userPage-userName {
+    font-size: 1.5rem;
+  }
+
+  .userPage-userPageBottom {
+    gap: 0.5rem;
+  }
+
+  .userPage-btnBox {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .userPage-btnBox > button {
+    width: auto;
+    height: auto;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .userPage-bottomChoice {
+    gap: 0.35rem;
+  }
+
+  .userPage-bottomChoice > button {
+    flex: 1;
+    padding: 0.5rem 0.25rem;
+    font-size: 0.85rem;
+  }
+
+  .userPage-bottom {
+    min-height: 15rem;
+    height: 40vh;
+    border-radius: 0.75rem;
+  }
+
+  .userPage-row {
+    gap: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .userPage-row > img {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .userPage-inlineForm {
+    flex-wrap: wrap;
+  }
+
+  .userPage-inlineForm input {
+    flex: 1 1 8rem;
+  }
+
+  .userPage-bellButton {
+    width: 3rem;
+    height: 3rem;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .alarm-container {
+    top: 3.5rem;
+    right: 0.5rem;
+    width: min(22rem, calc(100vw - 2rem));
+    height: 22rem;
+    border-radius: 0.75rem;
+  }
+
+  .Chat-box {
+    width: 96%;
+    height: 82dvh;
+    border-radius: 0.75rem;
+    align-items: stretch;
+  }
+
+  .Chat-chatList {
+    width: 28%;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .Chat-chatList h2 {
+    font-size: 0.9rem;
+  }
+
+  .Chat-room {
+    flex-direction: column;
+    align-items: flex-start;
+    overflow-wrap: anywhere;
+    padding: 0.35rem;
+  }
+
+  .Chat-chatBox {
+    width: 72%;
+    height: 100%;
+    margin-left: 0.3rem;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+  }
+
+  .Chat-roomHeader h1 {
+    max-width: 8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.95rem;
+  }
+
+  .Chat-roomHeader button {
+    padding: 0.35rem;
+    font-size: 0.7rem;
+  }
+
+  .Chat-chat.my > .Chat-text,
+  .Chat-chat.other > .Chat-text,
+  .Chat-chat.my > div > .Chat-text,
+  .Chat-chat.other > div > .Chat-text {
+    max-width: 58vw;
+    font-size: 0.95rem;
+  }
+
+  .Chat-chat.other > .Chat-profile {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .Chat-inputBox {
+    width: calc(100% - 1rem);
+    bottom: 0.6rem;
+    min-height: 3rem;
+  }
+
+  .Chat-inputBox textarea {
+    min-height: 2rem;
+    font-size: 0.9rem;
+  }
+
+  .Chat-inputBox > .Chat-applyBtn {
+    flex-basis: 4.5rem;
+    width: 4.5rem;
+    font-size: 0.7rem;
+  }
+
+  .Chat-submit {
+    width: 3rem;
+    min-height: 3rem;
+  }
 }

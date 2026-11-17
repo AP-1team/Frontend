@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Link, Outlet, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { api, resolveMediaUrl } from '../api.js';
 
 function DeadlineTimer({ deadline }) {
 
@@ -46,26 +47,22 @@ export default function Post() {
 
     const navigate = useNavigate();
 
-    const id = useParams();
+    const { id } = useParams();
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
     useEffect(() => {
-        fetch('/jjabPostDetail.json')
-            .then((res) => {
-                if(!res.ok) throw new Error("상세 정보 불러오기 실패");
-                return res.json();
-            })
-            .then((result) => {
-                if(result.success) {
-                    setPost(result.data.group);
-                }
-                setLoading(false);
-            })
-    },[])
+        let cancelled = false;
+        api.getGroup(id)
+            .then((result) => { if (!cancelled) setPost(result?.group || null); })
+            .catch((requestError) => { if (!cancelled) setError(requestError.message); })
+            .finally(() => { if (!cancelled) setLoading(false); });
+        return () => { cancelled = true; };
+    }, [id]);
 
     const goToChat = () => {
-        navigate(`/userPage/chat/1`)
+        if (post?.isJoined) navigate(`/userPage/chat/${id}`);
     }
 
     return (
@@ -74,39 +71,34 @@ export default function Post() {
                 {loading && (
                     <p>로딩 중...</p>
                 )}
+                {!loading && error && <p className='Post-errorText'>{error}</p>}
+                {!loading && !error && !post && <p>모집방 정보를 찾을 수 없습니다.</p>}
                 <section className='Post-leftside'>
-                    <div className='Post-image'></div>
+                    <div className='Post-image'>{post?.imageUrl && <img src={resolveMediaUrl(post.imageUrl)} alt={post.title}/>}</div>
 
-                    <button className='Post-chatBtn' onClick={()=>{
-                        goToChat();
-                    }}>채팅으로 가기</button>
+                    <button className='Post-chatBtn' disabled={!post?.isJoined} onClick={goToChat}>{post?.isJoined ? '채팅으로 가기' : '참여자만 채팅할 수 있습니다'}</button>
                     <span className='Post-remainTime'>남은 시간: <DeadlineTimer deadline={post?.deadline} /></span>
                 </section>
 
                 <section className='Post-rightside'>
                     <h1>{post?.title}</h1>
-                    <span className='Post-beforePrice'>{post?.price}원</span>
+                    <span className='Post-beforePrice'>{post?.price?.toLocaleString()}코인</span>
                     <div className='Post-priceBox'>
-                        <span className='Post-afterPrice'>{post?.price / post?.targetCount}원</span>
-                        <span className='Post-count'>{post?.targetCount}개 당</span>
+                        <span className='Post-afterPrice'>{post?.perPersonPrice?.toLocaleString() ?? Math.floor(post?.price / post?.targetCount).toLocaleString()}코인</span>
+                        <span className='Post-count'>{post?.perPersonQuantity ?? post?.quantity / post?.targetCount}개 당</span>
                     </div>
 
                     <span className='Post-description'>{post?.description}</span>
                     
                     <div className='Post-desBox'>
-                        <span>모집 기간:{post?.deadline}</span>
+                        <span>모집 기간: {post?.createdAt?.slice(0, 10)} ~ {post?.deadline?.slice(0, 10)}</span>
                         <span>모집 인원:{post?.targetCount}인 / <span className='Post-remainCount'>현재 {post?.currentCount}명 모집 완료</span></span>
-                        <span>모집 지역 제한: 우리집</span>
+                        <span>모집 지역 제한: {post?.region}</span>
                     </div>
 
-                    <div className='Post-userBox'>
-                        {post?.participants.map((user) => (
-                            <div key={user.id} className='Post-userProfile'>
-                                <div className='Post-userImage'></div>
-                                <span>{user.username}</span>
-                            </div>
-                        ))}
-                    </div>
+                    <span>작성자: {post?.author?.username}</span>
+
+                    <div className='Post-userBox'><span>총 수량 {post?.quantity}개</span></div>
                 </section>
             </div>
         </main>

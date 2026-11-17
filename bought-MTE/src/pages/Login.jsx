@@ -1,14 +1,17 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react'
+import { api, setAccessToken } from '../api.js'
 
 
 export default function Login() {
+    const navigate = useNavigate();
 
     const [userID, setUserID] = useState("");
     const [userPW, setUserPW] = useState("");
-    const [error, setError] = useState(" ");
+    const [error, setError] = useState("");
+    const [submitting, setSubmitting] = useState(false);
 
-    const LoginClicked = (e) => {
+    const LoginClicked = async (e) => {
         e.preventDefault();
 
         if(userID === "") {
@@ -20,26 +23,18 @@ export default function Login() {
             return;
         }
 
-        fetch('/api/auth/login', {
-            method: "POST",
-            body: JSON.stringify({
-                "username": userID,
-                "password": userPW
-            })
-        })
-        .then(res => res.json())
-        .then(res => {
-            if(res.success) {
-                console.log("로그인 성공");
-            }
-            else {
-                setError("존재하지 않는 계정입니다.");
-            }
-        })
-        .catch(error => {
-            console.log("로그인 중 에러 발생",error);
-            setError("서버와 통신할 수 없습니다.");
-        })
+        setSubmitting(true);
+        setError("");
+        try {
+            const result = await api.login({ username: userID, password: userPW });
+            if (!result?.accessToken) throw new Error('로그인 응답에 토큰이 없습니다.');
+            setAccessToken(result.accessToken);
+            navigate('/');
+        } catch (requestError) {
+            setError(requestError.message || '아이디 또는 비밀번호를 확인해주세요.');
+        } finally {
+            setSubmitting(false);
+        }
     }
 
     return (
@@ -52,30 +47,30 @@ export default function Login() {
             <div className='Login-rightside'>
                 <div className='Login-rightBox'>
                     <span>로그인</span>
-                    <div className='Login-inputBox'>
+                    <form className='Login-inputBox' onSubmit={LoginClicked}>
                         <div className='Login-IDBox'>
-                            <label for='Login-ID'>아이디:</label>
-                            <input id='Login-ID' onChange={(e)=>{
+                            <label htmlFor='Login-ID'>아이디:</label>
+                            <input id='Login-ID' autoComplete='username' onChange={(e)=>{
                                 setUserID(e.target.value);
                                 setError("");
                             }} value={userID}/>
                         </div>
 
                         <div className='Login-IDBox Login-PWBox'>
-                            <label for='Login-ID'>비밀번호:</label>
-                            <input id='Login-PW' type='password' onChange={(e)=>{
+                            <label htmlFor='Login-PW'>비밀번호:</label>
+                            <input id='Login-PW' type='password' autoComplete='current-password' onChange={(e)=>{
                                 setUserPW(e.target.value);
                                 setError("");
                             }} value={userPW}/>
                         </div>
                         
                         <div className='Login-submitBox'>
-                            <button id='Login-submitButton' onClick={LoginClicked}>로그인</button>
+                            <button id='Login-submitButton' type='submit' disabled={submitting}>{submitting ? '로그인 중...' : '로그인'}</button>
                             <span>{error}</span>
                         </div>
 
                         <Link to='/sign' className='Login-signButton'>회원 가입하러가기</Link>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

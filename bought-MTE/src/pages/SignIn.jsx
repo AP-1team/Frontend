@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { api } from '../api.js';
 
 export default function Sign() {
     const navigate = useNavigate();
@@ -9,7 +10,8 @@ export default function Sign() {
     const [userPW, setUserPW] = useState("");
     const [userPh, setUserPh] = useState("");
     const [userAddress, setUserAddress] = useState("");
-    const [error, setError] = useState(" ");
+    const [error, setError] = useState("");
+    const [submitting, setSubmitting] = useState(false);
 
     // 카카오 우편번호 설정
     const scriptUrl = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
@@ -33,7 +35,7 @@ export default function Sign() {
         open({ onComplete: handleComplete });
     };
 
-    const SignClicked = (e) => {
+    const SignClicked = async (e) => {
         e.preventDefault();
 
         if (userID === "") {
@@ -50,32 +52,16 @@ export default function Sign() {
             return;
         }
 
-        fetch('/api/auth/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                "username": userID,
-                "password": userPW,
-                "phone": userPh,
-                "address": userAddress,
-            })
-        })
-        .then((res) => res.json())
-        .then((res) => {
-            if (res.success) {
-                console.log("회원가입 성공");
-                navigate('/login');
-            } else {
-                console.log("회원가입 실패");
-                setError("회원가입에 실패했습니다.");
-            }
-        })
-        .catch((err) => {
-            console.error("회원가입 중 에러 발생:", err);
-            setError("서버와 통신할 수 없습니다.");
-        });
+        setSubmitting(true);
+        setError("");
+        try {
+            await api.signup({ username: userID, password: userPW, phone: userPh, address: userAddress });
+            navigate('/login');
+        } catch (requestError) {
+            setError(requestError.message || '회원가입에 실패했습니다.');
+        } finally {
+            setSubmitting(false);
+        }
     }
 
     const phoneInput = (value) => {
@@ -100,10 +86,10 @@ export default function Sign() {
             <div className='Login-rightside'>
                 <div className='Login-rightBox'>
                     <span>회원가입</span>
-                    <div className='Login-inputBox'>
+                    <form className='Login-inputBox' onSubmit={SignClicked}>
                         <div className='Login-IDBox'>
                             <label htmlFor='Login-ID'>아이디:</label>
-                            <input id='Login-ID' onChange={(e) => {
+                            <input id='Login-ID' autoComplete='username' onChange={(e) => {
                                 setUserID(e.target.value);
                                 setError("");
                             }} value={userID} />
@@ -135,19 +121,19 @@ export default function Sign() {
 
                         <div className='Login-IDBox Login-PWBox'>
                             <label htmlFor='Login-PW'>비밀번호:</label>
-                            <input id='Login-PW' type='password' onChange={(e) => {
+                            <input id='Login-PW' type='password' autoComplete='new-password' onChange={(e) => {
                                 setUserPW(e.target.value);
                                 setError("");
                             }} value={userPW} />
                         </div>
                         
                         <div className='Login-submitBox'>
-                            <button id='Login-submitButton' onClick={SignClicked}>회원가입</button>
+                            <button id='Login-submitButton' type='submit' disabled={submitting}>{submitting ? '가입 중...' : '회원가입'}</button>
                             <span>{error}</span>
                         </div>
 
                         <Link to='/login' className='Login-signButton'>로그인 하러가기</Link>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
