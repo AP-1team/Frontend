@@ -107,7 +107,11 @@ export default function PostUpload() {
                     <p className='Post-errorText'>{error}</p>
                 </section>
 
-                <form id='group-create-form' className='Upload-rightside' onSubmit={submit}>
+                <form id='group-create-form' className='Upload-rightside' onSubmit={submit} style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.7rem",
+                }}>
                     <div>
                         <label htmlFor="Upload-postName">상품명:</label>
                         <input id='Upload-postName' maxLength={100}
