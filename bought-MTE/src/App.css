@@ -1115,10 +1115,6 @@ button:disabled {
   cursor: pointer;
 }
 
-.Upload-rightside > div > label {
-  flex: 0 0 10rem;
-}
-
 .userPage-box {
   overflow: visible;
 }
